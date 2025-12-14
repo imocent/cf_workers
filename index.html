@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Web Worker Example</title>
+</head>
+<body>
+<script src="./main.js"></script>
+</body>
+</html>
+
+<!-- main.js -->
+const worker = new Worker('./_worker.js');
+
+worker.postMessage('Hello from main thread!');
+
+worker.onmessage = function(event) {
+console.log('Received message from worker:', event.data);
+};
+
+<!-- _worker.js -->
+self.onmessage = function(event) {
+console.log('Received message from main thread:', event.data);
+self.postMessage('Hello back from worker!');
+};
